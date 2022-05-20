@@ -1,8 +1,11 @@
 import React from 'react';
+import GenericTemplate from '../templates/GenericTemplate';
 
 const HomePage: React.FC = () => {
     return (
-        <>トップページ</>
+        <GenericTemplate title="トップページ">
+            <>トップページ</> 
+        </GenericTemplate>
     );
 };
 

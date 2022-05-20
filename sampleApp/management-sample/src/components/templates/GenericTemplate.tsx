@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { createTheme } from "@material-ui/core/styles";
 import * as colors from "@material-ui/core/colors";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
@@ -48,7 +48,7 @@ const theme = createTheme({
     }
 })
 
-const useStyles = makeStyles((theme: Theme) => {
+const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
             display: "flex",
@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme: Theme) => {
             color: theme.palette.text.secondary,
         },
     })
-});
+);
 
 const Copyright = () => {
     return (
@@ -160,13 +160,94 @@ const GenericTemplateProps: React.FC<GenericTemplateProps> =({
     const handleDrawerOpen = () => {
         setOpen(true);
     };
-    const handleDrawerOpen = () => {
+    const handleDrawerClose = () => {
         setOpen(false);
     }
 
     return (
         <ThemeProvider theme={theme}>
-            
+            <div className={classes.root}>
+                <CssBaseline />
+                <AppBar
+                position="absolute"
+                className={clsx(classes.appBar, open && classes.appBarShift)}>
+                    <Toolbar className={classes.toolbar}>
+                        <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        className={clsx(
+                            classes.menuButton,
+                            open && classes.menuButtonHidden
+                        )}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography
+                        component="h1"
+                        variant="h6"
+                        color="inherit"
+                        noWrap
+                        className={classes.title}
+                        >
+                            管理画面
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                variant="permanent"
+                classes={{
+                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+                }}
+                open={open}
+                >
+                    <div className={classes.toolbarIcon}>
+                        <IconButton onClick={handleDrawerClose}>
+                            <ChevronLeftIcon />
+                        </IconButton>
+                    </div>
+                    <Divider />
+                    <List>
+                        <Link to="" className={classes.link}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <HomeIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="トップページ" />
+                            </ListItem>
+                        </Link>
+                        <Link to="/products" className={classes.link}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <ShoppingCartIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="商品ページ" />
+                            </ListItem>
+                        </Link>
+                    </List>
+                </Drawer>
+                <main className={classes.content}>
+                    <div className={classes.appBarSpacer} />
+                    <Container maxWidth="lg" className={classes.container}>
+                        <Typography
+                        component="h2"
+                        variant="h5"
+                        color="inherit"
+                        noWrap
+                        className={classes.pageTitle}
+                        >
+                            {title}
+                        </Typography>
+                        {children}
+                        <Box pt={4}>
+                            <Copyright />
+                        </Box>
+                    </Container>
+                </main>
+            </div>
         </ThemeProvider>
     )
 }
+
+export default GenericTemplateProps;
